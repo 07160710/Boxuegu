@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.kaifeng.boxuegu.R;
 import com.kaifeng.boxuegu.bean.ExercisesBean;
+import com.kaifeng.boxuegu.utils.AnalysisUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +47,176 @@ public class ExercisesDetailAdapter extends BaseAdapter {
     }
     private ArrayList<String> selectedPosition = new ArrayList<String>();
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder vh;
         if(convertView == null){
             vh = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.exercises_detail_list_item,null);
+            vh.subject = (TextView) convertView.findViewById(R.id.tv_subject);
+            vh.tv_a = (TextView) convertView.findViewById(R.id.tv_a);
+            vh.tv_b = (TextView) convertView.findViewById(R.id.tv_b);
+            vh.tv_c = (TextView) convertView.findViewById(R.id.tv_c);
+            vh.tv_d = (TextView) convertView.findViewById(R.id.tv_d);
+            vh.iv_a = (ImageView) convertView.findViewById(R.id.iv_a);
+            vh.iv_b = (ImageView) convertView.findViewById(R.id.iv_b);
+            vh.iv_c = (ImageView) convertView.findViewById(R.id.iv_c);
+            vh.iv_d = (ImageView) convertView.findViewById(R.id.iv_d);
+            convertView.setTag(vh);
+        }else {
+            vh = (ViewHolder) convertView.getTag();
         }
+        final ExercisesBean bean = getItem(position);
+        if(bean != null){
+            vh.subject.setText(bean.subject);
+            vh.tv_a.setText(bean.a);
+            vh.tv_b.setText(bean.b);
+            vh.tv_c.setText(bean.c);
+            vh.tv_d.setText(bean.d);
+        }
+        if(!selectedPosition.contains("" + position)){
+            vh.iv_a.setImageResource(R.drawable.exercises_a);
+            vh.iv_b.setImageResource(R.drawable.exercises_b);
+            vh.iv_c.setImageResource(R.drawable.exercises_c);
+            vh.iv_d.setImageResource(R.drawable.exercises_d);
+            AnalysisUtils.setABCDEnable(true,vh.iv_a,vh.iv_b,vh.iv_c,vh.iv_d);
+        }else{
+            AnalysisUtils.setABCDEnable(false,vh.iv_a,vh.iv_b,vh.iv_c,vh.iv_d);
+            switch (bean.select){
+                case 0:
+                    if(bean.answer == 1){
+                        vh.iv_a.setImageResource(R.drawable.exercises_right_icon);
+                        vh.iv_b.setImageResource(R.drawable.exercises_b);
+                        vh.iv_c.setImageResource(R.drawable.exercises_c);
+                        vh.iv_d.setImageResource(R.drawable.exercises_d);
+                    }else if(bean.answer == 2){
+                        vh.iv_a.setImageResource(R.drawable.exercises_a);
+                        vh.iv_b.setImageResource(R.drawable.exercises_right_icon);
+                        vh.iv_c.setImageResource(R.drawable.exercises_c);
+                        vh.iv_d.setImageResource(R.drawable.exercises_d);
+                    }else if(bean.answer == 3){
+                        vh.iv_a.setImageResource(R.drawable.exercises_a);
+                        vh.iv_b.setImageResource(R.drawable.exercises_b);
+                        vh.iv_c.setImageResource(R.drawable.exercises_right_icon);
+                        vh.iv_d.setImageResource(R.drawable.exercises_d);
+                    }else if(bean.answer == 4){
+                        vh.iv_a.setImageResource(R.drawable.exercises_a);
+                        vh.iv_b.setImageResource(R.drawable.exercises_b);
+                        vh.iv_c.setImageResource(R.drawable.exercises_c);
+                        vh.iv_d.setImageResource(R.drawable.exercises_right_icon);
+                    }
+                    break;
+                case 1:
+                    vh.iv_a.setImageResource(R.drawable.exercises_error_icon);
+                    if(bean.answer == 2){
+                        vh.iv_b.setImageResource(R.drawable.exercises_right_icon);
+                        vh.iv_c.setImageResource(R.drawable.exercises_c);
+                        vh.iv_d.setImageResource(R.drawable.exercises_d);
+                    }else if(bean.answer == 3){
+                        vh.iv_b.setImageResource(R.drawable.exercises_b);
+                        vh.iv_c.setImageResource(R.drawable.exercises_right_icon);
+                        vh.iv_d.setImageResource(R.drawable.exercises_d);
+                    }else if(bean.answer == 4){
+                        vh.iv_b.setImageResource(R.drawable.exercises_b);
+                        vh.iv_c.setImageResource(R.drawable.exercises_c);
+                        vh.iv_d.setImageResource(R.drawable.exercises_right_icon);
+                    }
+                    break;
+                case 2:
+                    vh.iv_b.setImageResource(R.drawable.exercises_error_icon);
+                    if(bean.answer == 1){
+                        vh.iv_a.setImageResource(R.drawable.exercises_right_icon);
+                        vh.iv_c.setImageResource(R.drawable.exercises_c);
+                        vh.iv_d.setImageResource(R.drawable.exercises_d);
+                    }else if(bean.answer == 3){
+                        vh.iv_a.setImageResource(R.drawable.exercises_a);
+                        vh.iv_c.setImageResource(R.drawable.exercises_right_icon);
+                        vh.iv_d.setImageResource(R.drawable.exercises_d);
+                    }else if(bean.answer == 4){
+                        vh.iv_a.setImageResource(R.drawable.exercises_a);
+                        vh.iv_c.setImageResource(R.drawable.exercises_c);
+                        vh.iv_d.setImageResource(R.drawable.exercises_right_icon);
+                    }
+                    break;
+                case 3:
+                    vh.iv_c.setImageResource(R.drawable.exercises_error_icon);
+                    if(bean.answer == 1){
+                        vh.iv_a.setImageResource(R.drawable.exercises_right_icon);
+                        vh.iv_b.setImageResource(R.drawable.exercises_b);
+                        vh.iv_d.setImageResource(R.drawable.exercises_d);
+                    }else if(bean.answer == 2){
+                        vh.iv_a.setImageResource(R.drawable.exercises_a);
+                        vh.iv_b.setImageResource(R.drawable.exercises_right_icon);
+                        vh.iv_d.setImageResource(R.drawable.exercises_d);
+                    }else if(bean.answer == 4){
+                        vh.iv_a.setImageResource(R.drawable.exercises_a);
+                        vh.iv_b.setImageResource(R.drawable.exercises_c);
+                        vh.iv_d.setImageResource(R.drawable.exercises_right_icon);
+                    }
+                    break;
+                case 4:
+                    vh.iv_d.setImageResource(R.drawable.exercises_error_icon);
+                    if(bean.answer == 1){
+                        vh.iv_a.setImageResource(R.drawable.exercises_right_icon);
+                        vh.iv_b.setImageResource(R.drawable.exercises_b);
+                        vh.iv_c.setImageResource(R.drawable.exercises_c);
+                    }else if(bean.answer == 2){
+                        vh.iv_a.setImageResource(R.drawable.exercises_a);
+                        vh.iv_b.setImageResource(R.drawable.exercises_right_icon);
+                        vh.iv_c.setImageResource(R.drawable.exercises_c);
+                    }else if(bean.answer == 3){
+                        vh.iv_a.setImageResource(R.drawable.exercises_a);
+                        vh.iv_b.setImageResource(R.drawable.exercises_b);
+                        vh.iv_c.setImageResource(R.drawable.exercises_right_icon);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        vh.iv_a.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(selectedPosition.contains("" + position)){
+                    selectedPosition.remove("" + position);
+                }else{
+                    selectedPosition.add(position + "");
+                }
+                onSelectListener.onSelectA(position,vh.iv_a,vh.iv_b,vh.iv_c,vh.iv_d);
+            }
+        });
+        vh.iv_b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(selectedPosition.contains("" + position)){
+                    selectedPosition.remove("" + position);
+                }else{
+                    selectedPosition.add(position + "");
+                }
+                onSelectListener.onSelectB(position,vh.iv_a,vh.iv_b,vh.iv_c,vh.iv_d);
+            }
+        });
+        vh.iv_c.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(selectedPosition.contains("" + position)){
+                    selectedPosition.remove("" + position);
+                }else{
+                    selectedPosition.add(position + "");
+                }
+                onSelectListener.onSelectC(position,vh.iv_a,vh.iv_b,vh.iv_c,vh.iv_d);
+            }
+        });
+        vh.iv_d.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(selectedPosition.contains("" + position)){
+                    selectedPosition.remove("" + position);
+                }else{
+                    selectedPosition.add(position + "");
+                }
+                onSelectListener.onSelectD(position,vh.iv_a,vh.iv_b,vh.iv_c,vh.iv_d);
+            }
+        });
         return convertView;
     }
     class ViewHolder{
@@ -60,6 +225,9 @@ public class ExercisesDetailAdapter extends BaseAdapter {
     }
 
     public interface OnSelectListener{
-
+        void onSelectA(int position,ImageView iv_a,ImageView iv_b,ImageView iv_c,ImageView iv_d);
+        void onSelectB(int position,ImageView iv_a,ImageView iv_b,ImageView iv_c,ImageView iv_d);
+        void onSelectC(int position,ImageView iv_a,ImageView iv_b,ImageView iv_c,ImageView iv_d);
+        void onSelectD(int position,ImageView iv_a,ImageView iv_b,ImageView iv_c,ImageView iv_d);
     }
 }
