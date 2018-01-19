@@ -17,11 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kaifeng.boxuegu.R;
+import com.kaifeng.boxuegu.view.CourseView;
 import com.kaifeng.boxuegu.view.ExerciseView;
+import com.kaifeng.boxuegu.view.MyInfoView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+    private CourseView mCourseView;
     private ExerciseView mExercisesView;
+    private MyInfoView mMyInfoView;
     private FrameLayout mBodyLayout;
     public LinearLayout mBottomLayout;
     private View mCourseBtn;
@@ -87,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bottom_bar_myinfo_btn:
                 clearBottomImageState();
                 selectDisplayView(2);
+//                if (mMyInfoView != null){
+//                    mMyInfoView.setLoginParams(readLoginStatus());
+//                }
                 break;
             default:
                 break;
@@ -150,6 +156,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void createView(int viewIndex){
         switch (viewIndex){
             case 0:
+                /*
+                if (mCourseView == null){
+                    mCourseView = new CourseView(this);
+                    mBodyLayout.addView(mCourseView.getView());
+                }else{
+                    mCourseView.getView();
+                }
+                mCourseView.showView();
+                */
                 break;
             case 1:
                 if(mExercisesView == null){
@@ -161,6 +176,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mExercisesView.showView();
                 break;
             case 2:
+                /*
+                if(mMyInfoView == null){
+                    mMyInfoView = new MyInfoView(this);
+                    mBodyLayout.addView(mMyInfoView.getView());
+                }else{
+                    mMyInfoView.getView();
+                }
+                mMyInfoView.showView();*/
                 break;
         }
     }
@@ -174,6 +197,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 clearBottomImageState();
                 selectDisplayView(0);
             }
+//            if (mMyInfoView != null){
+//                mMyInfoView.setLoginParams(isLogin);
+//            }
         }
     }
     protected long exitTime;
