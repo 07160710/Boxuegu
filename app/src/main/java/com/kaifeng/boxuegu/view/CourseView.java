@@ -5,4 +5,5 @@ package com.kaifeng.boxuegu.view;
  */
 
 public class CourseView {
+    public static final int MSG_AD_SLID = 002;
 }
