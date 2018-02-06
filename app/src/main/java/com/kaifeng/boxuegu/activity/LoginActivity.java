@@ -60,18 +60,21 @@ public class LoginActivity extends AppCompatActivity {
         });
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 userName = et_user_name.getText().toString().trim();
                 psw = et_psw.getText().toString().trim();
                 String md5Psw = MD5Utils.md5(psw);
-                spPsw = readPsw(userName);
+                spPsw=readPsw(userName);
                 if (TextUtils.isEmpty(userName)){
                     Toast.makeText(LoginActivity.this,"请输入用户名",Toast.LENGTH_SHORT).show();
                     return;
-                }else if (TextUtils.isEmpty(psw)){
+                }else if(TextUtils.isEmpty(psw)){
                     Toast.makeText(LoginActivity.this,"请输入密码",Toast.LENGTH_SHORT).show();
                     return;
-                }else if (TextUtils.isEmpty(spPsw)){
+                }else if(spPsw!=null&&!TextUtils.isEmpty(spPsw) && !md5Psw.equals(spPsw)){
+                    Toast.makeText(LoginActivity.this,"请输入的用户名和密码不一致",Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(md5Psw.equals(spPsw)){
                     Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
                     saveLoginStatus(true,userName);
                     Intent data = new Intent();
@@ -79,11 +82,8 @@ public class LoginActivity extends AppCompatActivity {
                     setResult(RESULT_OK,data);
                     LoginActivity.this.finish();
                     return;
-                }else if (spPsw != null && !TextUtils.isEmpty(spPsw) && !md5Psw.equals(spPsw)){
-                    Toast.makeText(LoginActivity.this,"输入的用户名和密码不一致",Toast.LENGTH_SHORT).show();
-                    return;
                 }else{
-                    Toast.makeText(LoginActivity.this,"此用户不存在",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,"此用户名不存在",Toast.LENGTH_SHORT).show();
                 }
             }
         });
